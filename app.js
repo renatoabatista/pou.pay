@@ -56,11 +56,14 @@ class BancoDeDadosLocal{
         }
         return despesas
     }
+    pesquisar(despesas){
+        let filtroDespesa = new Array
+        filtroDespesa = this.recuperarListagemCompletaDepesas()
+        console.log(filtroDespesa)
+    }
 }
 
 let bancoDados = new BancoDeDadosLocal()
-
-
 let infoData = new Date()
 
 function cadastrarDespesa(){
@@ -136,13 +139,6 @@ function CarregaListagemDespesas(){
     // selecimento elemento TBODY
     let listaDespesas = document.getElementById('listagemDespesas')
 
-    /*<tr>
-        <td>22/09/2020</td>
-        <td>Alimentação</td>
-        <td>Primus Supemercados</td>
-        <td>122,22</td>
-    </tr> */
-
      //percorrer arrayDespesas
 
      despesas.forEach(function(despesaForEach){
@@ -185,7 +181,6 @@ function CarregaListagemDespesas(){
 function validarDia(){
     if(dia.value > 31){
         $('#modalRegistroDepesa').modal('show')
-
             document.getElementById('modal-titulo').innerHTML = 'Erro - dia digitado é inválido'
             document.getElementById('modal_titulo_header').className = 'modal-header bg-warning text-light'
             document.getElementById('modal-corpo').innerHTML = `Você digitou um valor: <strong>${dia.value}</strong> para dia. <strong>Volte e faça o ajuste ou
@@ -194,6 +189,20 @@ function validarDia(){
             document.getElementById('modal-btn').innerHTML = 'Voltar e corrigir!'
             dia.value = infoData.getDate()
     }
+}
+
+function pesquisarDespesasCadastradas(){
+   let ano = document.getElementById('ano')
+   let mes = document.getElementById('mes')
+   let dia = document.getElementById('dia')
+   let tipo = document.getElementById('tipo')
+   let descricao = document.getElementById('descricao')
+   let valor =  document.getElementById('valor')
+
+   let despesaPesquisa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
+
+   bancoDados.pesquisar(despesaPesquisa)
+
 }
 
 
