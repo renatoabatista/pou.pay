@@ -38,7 +38,6 @@ class BancoDeDadosLocal{
 
     recuperarListagemCompletaDepesas(){
         let despesas = []
-
         let id = localStorage.getItem('ID')
 
         for (let i = 1; i <= id;i++){
@@ -58,8 +57,34 @@ class BancoDeDadosLocal{
     }
     pesquisar(despesas){
         let filtroDespesa = new Array
+
         filtroDespesa = this.recuperarListagemCompletaDepesas()
-        console.log(filtroDespesa)
+        
+        if(despesas.ano != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.ano == despesas.ano)) 
+        } 
+
+        if(despesas.mes != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.mes == despesas.mes)) 
+        } 
+
+        if(despesas.dia != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.dia == despesas.dia)) 
+        }
+
+        if(despesas.tipo != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.tipo == despesas.tipo)) 
+        } 
+
+        if(despesas.descricao != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.descricao == despesas.descricao)) 
+        }
+
+        if(despesas.valor != ''){
+            filtroDespesa = (filtroDespesa.filter(dado => dado.valor == despesas.valor)) 
+        }
+       
+        return filtroDespesa
     }
 }
 
@@ -131,14 +156,16 @@ function cadastrarDespesa(){
         }
 }
 
-function CarregaListagemDespesas(){
-    let despesas = []
-
-    despesas = bancoDados.recuperarListagemCompletaDepesas()
+function CarregaListagemDespesas(despesas = [], filtroSistema = false){
    
+    if (despesas.length == 0 && filtroSistema == false){
+        despesas = bancoDados.recuperarListagemCompletaDepesas()
+      
+    }
+
     // selecimento elemento TBODY
     let listaDespesas = document.getElementById('listagemDespesas')
-
+    listaDespesas.innerHTML = ''
      //percorrer arrayDespesas
 
      despesas.forEach(function(despesaForEach){
@@ -173,6 +200,9 @@ function CarregaListagemDespesas(){
         tr.insertCell(2).innerHTML = despesaForEach.descricao
         tr.insertCell(3).innerHTML = despesaForEach.valor
 
+        //exclusão
+        let botaoExcluir = document.createElement('button') 
+        tr.insertCell(4).append(botaoExcluir)
 
      })
 }
@@ -201,7 +231,26 @@ function pesquisarDespesasCadastradas(){
 
    let despesaPesquisa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
 
-   bancoDados.pesquisar(despesaPesquisa)
+   let despesas =  bancoDados.pesquisar(despesaPesquisa)    
+
+    CarregaListagemDespesas(despesas, true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
@@ -236,7 +285,8 @@ function limparCampos(){
 }
 
 class Usuario{
-    constructor(usuario, senha, Rsenha){
+    constructor(idUsuario, usuario, senha, Rsenha){
+        this.idUsuario = idUsuario
         this.usuario = usuario
         this.senha = senha
         this.Rsenha = Rsenha
@@ -249,6 +299,7 @@ function registrarUsuario () {
     let Rsenha = document.getElementById('Rsenha')
     
     let novoCadastro = new Usuario(
+        idUsuario.value,
         usuario.value,
         senha.value,
         Rsenha.value
