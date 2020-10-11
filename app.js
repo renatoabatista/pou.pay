@@ -7,16 +7,40 @@ class Despesa{
         this.descricao = descricao
         this.valor = valor
     }
-
+    
     validarCampo(){
         for(let campos in this){
             if (this[campos] == undefined || this[campos] == '' || this[campos] == null){
-                
                return false
             }
         }
         return true
     }
+}
+
+class Saldo {
+    constructor(saldoDisponivel,limiteA){
+        this.saldoDisponivel = saldoDisponivel
+        this.limiteA = limiteA
+    }
+
+    limiteGastos(){
+        let limiteA = 2000
+
+
+       /*  /// verificar se foi cadastrado um limite de gast mês
+
+        if(limiteA == 0 || limiteA === undefined){
+            alert('Favor cadastre o limite')
+            window.location.href="login.html"
+        } */
+        return limiteA
+    }
+
+    saldoDisponivel(){
+      
+    }
+
 }
 
 class BancoDeDadosLocal{
@@ -50,10 +74,13 @@ class BancoDeDadosLocal{
                 continue
             }
 
+            despesa.id = i
+            
             despesas.push(despesa)
 
         }
         return despesas
+
     }
     pesquisar(despesas){
         let filtroDespesa = new Array
@@ -86,10 +113,61 @@ class BancoDeDadosLocal{
        
         return filtroDespesa
     }
+
+    excluirDespesa(id){
+        localStorage.removeItem(id)
+    }
+
+    relatorioDespesas(despesas){
+        let percentualTotal = 0
+        saldo.limiteGastos()
+        let somaDespesasTotal = despesas.reduce((incremento, acumulador) =>{
+            return parseFloat(incremento) + parseFloat(acumulador.valor)
+        },0)
+
+        document.getElementById('MostrarDespesas').innerHTML = `R$ ${somaDespesasTotal.toFixed(2)}`
+        //document.getElementById('progressoGastoTotal').innerHTML = `R$ ${somaDespesasTotal.toFixed(2)}`
+
+        if (somaDespesasTotal){
+            document.getElementById('progressoGastoTotal').className = 'bg-danger progress-bar'
+
+            percentualTotal = (somaDespesasTotal * 100) / (saldo.limiteGastos()) 
+            document.getElementById('progressoGastoTotal').style.width = `${percentualTotal}%`
+
+            console.log(percentualTotal)
+            /// trabalhando nessa feature
+            
+            document.getElementById('progressoGastoTotal').innerHTML = `${percentualTotal.toFixed(0)}%`
+            document.getElementById('saldoDisponivel').innerHTML = `R$${saldo.limiteGastos()}`
+
+            console.log(saldo.limiteGastos())
+
+            if(percentualTotal < 30){
+                document.getElementById('progressoGastoTotal').className = 'bg-success progress-bar'
+            }
+
+            if(percentualTotal > 30 && percentualTotal < 60 ){
+                document.getElementById('progressoGastoTotal').className = 'bg-warning progress-bar'
+            }
+
+            if(percentualTotal > 60 && percentualTotal <= 100 ){
+                document.getElementById('progressoGastoTotal').className = 'bg-danger progress-bar'
+            }
+        }
+    }
+
+    registroRecente(despesas){
+        despesas.forEach(function(A){
+            document.getElementById('MostrarDespesaRecente').innerHTML = `R$ ${A.valor}`
+            document.getElementById('MostrarDespesaRecenteM').innerHTML = `R$ ${A.valor}`
+        })
+    }
 }
 
 let bancoDados = new BancoDeDadosLocal()
 let infoData = new Date()
+let saldo = new Saldo()
+
 
 function cadastrarDespesa(){
     
@@ -109,8 +187,6 @@ function cadastrarDespesa(){
     if(mes.value == 0){
         mes.value = infoData.getMonth()
     } 
-    
-   
     
     let despesa = new Despesa(
         ano.value,
@@ -136,7 +212,6 @@ function cadastrarDespesa(){
             Descrição: ${descricao.value} <br> Valor: R$ ${valor.value} <br> `
 
             document.getElementById('saldoPrint').innerHTML = `R$ ${valor.value}`
-            document.getElementById('despesaPrint').innerHTML = `R$ ${valor.value}`
 
             ano.value = ''
             mes.value = ''
@@ -160,17 +235,13 @@ function CarregaListagemDespesas(despesas = [], filtroSistema = false){
    
     if (despesas.length == 0 && filtroSistema == false){
         despesas = bancoDados.recuperarListagemCompletaDepesas()
-      
     }
 
-    // selecimento elemento TBODY
     let listaDespesas = document.getElementById('listagemDespesas')
     listaDespesas.innerHTML = ''
      //percorrer arrayDespesas
 
      despesas.forEach(function(despesaForEach){
-        
-        // linha - TR
 
         let tr = listaDespesas.insertRow()
 
@@ -200,14 +271,29 @@ function CarregaListagemDespesas(despesas = [], filtroSistema = false){
         tr.insertCell(2).innerHTML = despesaForEach.descricao
         tr.insertCell(3).innerHTML = despesaForEach.valor
 
-        //exclusão
+        //exclusão do registros
         let botaoExcluir = document.createElement('button') 
-        tr.insertCell(4).append(botaoExcluir)
+        
+        botaoExcluir.className = 'btn btn-outline-danger'
+        botaoExcluir.innerHTML = '<i class="fas fa-trash"></i>'
+        botaoExcluir.id = `ID_DESPESA_${despesaForEach.id}` 
 
+        botaoExcluir.onclick= function(){
+           
+            let id = this.id.replace('ID_DESPESA_', '')
+           
+            bancoDados.excluirDespesa(id)
+            window.location.reload()
+        }
+        tr.insertCell(4).append(botaoExcluir)
      })
+
+     bancoDados.registroRecente(despesas)
+     bancoDados.relatorioDespesas(despesas)
+     
+
 }
  
-
 function validarDia(){
     if(dia.value > 31){
         $('#modalRegistroDepesa').modal('show')
@@ -219,6 +305,7 @@ function validarDia(){
             document.getElementById('modal-btn').innerHTML = 'Voltar e corrigir!'
             dia.value = infoData.getDate()
     }
+
 }
 
 function pesquisarDespesasCadastradas(){
@@ -228,49 +315,10 @@ function pesquisarDespesasCadastradas(){
    let tipo = document.getElementById('tipo')
    let descricao = document.getElementById('descricao')
    let valor =  document.getElementById('valor')
-
    let despesaPesquisa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
-
    let despesas =  bancoDados.pesquisar(despesaPesquisa)    
-
-    CarregaListagemDespesas(despesas, true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   CarregaListagemDespesas(despesas, true)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -323,6 +371,4 @@ function cadUsuario(dadosUsuario){
     localStorage.setItem('Usuario', JSON.stringify(dadosUsuario))
 }
 class BDUsuario{
-    
-    
 }
