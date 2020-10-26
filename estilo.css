@@ -1,0 +1,214 @@
+::selection{
+   background-color: #ffd900;
+   color:white;
+}
+
+body{
+    /* background-color:#f7f5ee; */
+    background-color: #f7f5ee;
+    font-family: 'Questrial', sans-serif;
+
+}
+a:hover{
+    text-decoration: none;
+    color:#0a9c9c;
+}
+a{
+    color:black;
+}
+
+.borda{
+    border: 1px solid red;
+}
+label{
+    font-size: 20px;
+    color:#494747;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.bg-s{
+    box-shadow: 5px 5px 12px #696968;
+}
+.bg-img{
+    background: url('img/capa-mulher.png'),
+    linear-gradient( #ffd900, #ffa704);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+input[type="checkbox"]{
+    border-bottom:3px solid #ffd900;
+}
+
+
+select, option, input{
+  margin-top: 10px;
+  appearance: none;
+  background-color: #ffd900;  
+}
+.b-border{
+    border-bottom:3px solid #ffd900;
+    
+}
+
+
+select, option{
+    margin-top: 10px;
+    appearance: none;
+    background-color: #ffd900;  
+    border-bottom:3px solid #ffd900;  
+}
+  
+input:focus[type="text"]{
+    border-radius: 20px; 
+    background-color:#ffd900;
+}
+
+.normal-button{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#ffa704;
+    text-transform: uppercase;
+}
+.normal-button:hover{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#0a9c9c;
+    text-transform: uppercase;
+}
+.box{
+    margin-left: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: 40px;
+}
+.titulo{
+    color:#0a9c9c;
+    font-family: 'Montserrat', sans-serif;
+}
+.Rbutton{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#18d360;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-right:20px;
+}
+
+.Rbutton:hover{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#0a9c9c;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.Cbutton{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#d34d18;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-right:20px;
+}
+.Cbutton:hover{
+    border-radius: 22px;
+    border: 0px;
+    padding:5px;
+    width: 130px;
+    font-size: 15px;
+    color:white;
+    background-color:#0a9c9c;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-right:20px;
+}
+.nav-item {
+    border-radius: 10px;
+    border-color: #ffa704;
+    border-style: solid;
+    border-width: 0 0 2px 0  ;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.nav-item:hover {
+    border-radius: 10px;
+    border-color: #b88805;
+    transition-duration: 0.7s;
+    border-style: solid;
+    border-width: 0 0 2px 0  ;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color:red;
+}
+
+.card{
+    margin-top: -20px;
+    color:#18d360;
+    margin-bottom: 30px;
+    border:0px;
+    font-family: 'Bebas Neue', cursive;
+}
+.title-red{
+    color:#d34d18;
+}
+.box-title{
+    font-family: 'Montserrat', sans-serif;
+}
+.img-box1{
+    background-size: 25%;
+    background-repeat: no-repeat;
+    background-image: url('img/icon-saldo-disponivel.png');
+    background-position: right 10% top 20%;
+}
+.img-box2{
+    background-size: 25%;
+    background-repeat: no-repeat;
+    background-image: url('img/icon-registro.png');
+    background-position: right 5% top 20%;
+}
+.img-box3{
+    background-size: 25%;
+    background-repeat: no-repeat;
+    background-image: url('img/icon-despesa.png');
+    background-position: right 5% top 20%;
+}
+.img-box4{
+    background-size: 20%;
+    background-repeat: no-repeat;
+    background-image: url('img/icon-cartao-credito.png');
+    background-position: right 10% top 20%;
+}
+ .boxY{
+    margin-top: -20px !important;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 100px;
+    
+}
+.box-img-footer-right{
+    background-image: url('img/capa-mulher.png');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    margin-top: -30px;
+    height: 130px;
+} 
+
