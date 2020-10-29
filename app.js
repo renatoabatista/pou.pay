@@ -77,7 +77,7 @@ class BancoDeDadosLocal{
             despesa.id = i
             
             despesas.push(despesa)
-
+            bancoDados.RelatorioDespesasGeral(despesas)
         }
         return despesas
 
@@ -120,27 +120,22 @@ class BancoDeDadosLocal{
 
     relatorioDespesas(despesas){
         let percentualTotal = 0
+
         saldo.limiteGastos()
+
         let somaDespesasTotal = despesas.reduce((incremento, acumulador) =>{
             return parseFloat(incremento) + parseFloat(acumulador.valor)
         },0)
-
-        document.getElementById('MostrarDespesas').innerHTML = `R$ ${somaDespesasTotal.toFixed(2)}`
-        //document.getElementById('progressoGastoTotal').innerHTML = `R$ ${somaDespesasTotal.toFixed(2)}`
 
         if (somaDespesasTotal){
             document.getElementById('progressoGastoTotal').className = 'bg-danger progress-bar'
 
             percentualTotal = (somaDespesasTotal * 100) / (saldo.limiteGastos()) 
             document.getElementById('progressoGastoTotal').style.width = `${percentualTotal}%`
-
-            console.log(percentualTotal)
-            /// trabalhando nessa feature
+            
             
             document.getElementById('progressoGastoTotal').innerHTML = `${percentualTotal.toFixed(0)}%`
             document.getElementById('saldoDisponivel').innerHTML = `R$${saldo.limiteGastos()}`
-
-            console.log(saldo.limiteGastos())
 
             if(percentualTotal < 30){
                 document.getElementById('progressoGastoTotal').className = 'bg-success progress-bar'
@@ -162,8 +157,24 @@ class BancoDeDadosLocal{
             document.getElementById('MostrarDespesaRecenteM').innerHTML = `R$ ${A.valor}`
         })
     }
-}
+    RelatorioDespesasGeral(despesas){
 
+        let percentualTotal = 0
+
+        saldo.limiteGastos()
+
+        
+
+        let somaDespesasTotal = despesas.reduce((incremento, acumulador) =>{
+            return parseFloat(incremento) + parseFloat(acumulador.valor)
+        },0)
+
+        let saldoDisponivel = saldo.limiteGastos() - somaDespesasTotal
+
+        document.getElementById('MostrarDespesas').innerHTML = `R$ ${somaDespesasTotal.toFixed(2)}`
+        document.getElementById('saldoDisponivelTela').innerHTML = `R$ ${saldoDisponivel}`
+    }
+}
 let bancoDados = new BancoDeDadosLocal()
 let infoData = new Date()
 let saldo = new Saldo()
@@ -290,10 +301,12 @@ function CarregaListagemDespesas(despesas = [], filtroSistema = false){
 
      bancoDados.registroRecente(despesas)
      bancoDados.relatorioDespesas(despesas)
-     
 
 }
  
+
+
+
 function validarDia(){
     if(dia.value > 31){
         $('#modalRegistroDepesa').modal('show')
