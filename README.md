@@ -21,6 +21,11 @@ Consulta de despesas demonstrando os valores lançados até a data com possibili
 Barra de progresso condicional sinalizando graficamente e em percentual gasto.
 
 ## Tecnologias
-
-
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+## Framework
+BootStrap 4
 
