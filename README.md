@@ -5,10 +5,10 @@ Aplicação web responsiva desenvolvida para consolidar os conhecimentos adqueri
 
 ## Funcionalidades
 
-Box informativo do saldo atual, considerando o total de despesas subritraido pelo limite de gasto esperado.
-Box registro recente, retornando o último valor registrado pelo usuário.
-Box despesas informa o valor total de despesas registradas.
-Box cartão de crédito retorna o valor apenas de registros relacionados ao cartão de crédito.
+<p>Box informativo do saldo atual, considerando o total de despesas subritraido pelo limite de gasto esperado.</p>
+<p>Box registro recente, retornando o último valor registrado pelo usuário.</p>
+<p>Box despesas informa o valor total de despesas registradas.</p>
+<p>Box cartão de crédito retorna o valor apenas de registros relacionados ao cartão de crédito.</p>
 
 Os registros são realizados atráves de um página especifica de cadastro de despesas, onde os dados são armazenados localmente em localStorage do navegador.
 
