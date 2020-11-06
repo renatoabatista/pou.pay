@@ -37,3 +37,5 @@ BootStrap 4
 
 ## Telas
 <img src="https://raw.githubusercontent.com/renatoabatista/pou.pay/master/screen/01.png">
+<img src="https://raw.githubusercontent.com/renatoabatista/pou.pay/master/screen/02.png">
+<img src="https://raw.githubusercontent.com/renatoabatista/pou.pay/master/screen/03.png">
