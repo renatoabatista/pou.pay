@@ -1,5 +1,10 @@
 ## Projeto Controle Financeiro - Pou.Pay
 
+## O que aprendi? 
+
+Conceitos básicos em JavaScript com paradgma da orientação a objetos
+Trabalhar com class, localStorage, filter, forEach, reduce, manipulação de elementos DOM e API JSON.
+
 ## Sobre o projeto
 Aplicação web responsiva desenvolvida para consolidar os conhecimentos adqueridos atráves do consumo de documentação e curso JavaScript na UDEMY.
 
