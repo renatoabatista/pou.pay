@@ -25,7 +25,7 @@ class Saldo {
     }
 
     limiteGastos(){
-        let limiteA = 2000
+        let limiteA = 500
 
 
        /*  /// verificar se foi cadastrado um limite de gast mês
